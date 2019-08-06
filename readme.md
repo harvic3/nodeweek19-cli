@@ -6,7 +6,7 @@
 
 > Basic concepts to create a CLI in NodeJS 
 
-- Let's know to `process.argv`
+## Let's know to `process.argv`
 
 `process` is an object created when a `script` is running in NodeJS and it contains information about the current process and within its properties we find the `argv` which is an array that contains information about the command that executed the process.
 
