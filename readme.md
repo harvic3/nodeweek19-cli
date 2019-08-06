@@ -92,7 +92,7 @@ Then we will be able to see how our application was linked as if it were a npm p
 
 # Chapter Two 🎬
 
-> Obtain and process user parameters
+> Obtain and transform the user parameters
 
 ## Let's get the user parameters 
 
@@ -128,7 +128,7 @@ User params:  [ 'action', '--param1', 'value1', '--param2', 'value2', '--param3'
 ```
 And as you can see we already have the user parameters.
 
-## Processing user parameters
+## Transform the user parameters
 
 For this task we are going to require a function that receives the array of user arguments and allows us to manage it in a more efficient way, for example by means of an object, then our function would be the following one: 
 
