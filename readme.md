@@ -124,7 +124,7 @@ And by executing our command, we will have a result:
 ```console
 $ nodewk create --param1 value1 --param2 value2 --param3 value3 --paramN valueN
 System params:  [ 'C:\\Program Files\\nodejs\\node.exe', 'C:\\Program Files\\nodejs\\node_modules\\node-cli\\index.js' ]
-User params:  [ '--param1', 'value1', '--param2', 'value2', '--param3', 'value3', '--paramN', 'valueN' ]
+User params:  [ 'create', '--param1', 'value1', '--param2', 'value2', '--param3', 'value3', '--paramN', 'valueN' ]
 ```
 And as you can see we already have the user parameters.
 
