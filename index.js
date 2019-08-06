@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 'use strict';
 
-const processArgv = process.argv;
 const separator = '--';
 
 // PORT - This code is only for debugger
@@ -27,11 +26,38 @@ const convertArrayArgumentsToObjectArguments = (argsV, separator) => {
   return options;
 }
 
-if (!processArgv[2]) {
-  console.log('No entry');
-  process.exit(1);
-} else {
-  console.log('System params: ', processArgv.slice(0, 2));
-  const userParams = convertArrayArgumentsToObjectArguments(processArgv.splice(2), separator);
-  console.log('User params: ', userParams);
+const processAction = options => {
+  const action = options.action;
+  delete options.action;
+  switch (action) {
+    case 'create':
+      console.log('We to create something with this params: ', options);
+    break;
+    case 'search':
+      console.log('We to search something with this params: ', options);
+    break;
+    case 'edit':
+      console.log('We to edit something with this params: ', options);
+    break;
+    case 'delete':
+      console.log('We to delete something with this params: ', options);
+    break;
+    case 'process':
+      console.log('We to process something  with this params: ', options);
+    break;
+    default: 
+      console.log('You must send a valid action.');
+  }
 }
+
+const main = async () => {
+  const processArgv = process.argv;
+  if (!processArgv[2]) {
+    console.log('No entry');
+    process.exit(1);
+  }
+  const options = convertArrayArgumentsToObjectArguments(processArgv.splice(2), separator);
+  processAction(options);
+}
+
+main();
