@@ -160,6 +160,7 @@ Then our new script will look like this:
 
 ```js
 #!/usr/bin/env node
+// index.js
 'use strict';
 
 const separator = '--';
@@ -209,12 +210,15 @@ User params: {
 }
 ```
 
-## Chapter Three 🎬 
+# Chapter Three 🎬 
 
 Well, at this point we have almost everything ready for our CLI application, however we are going to organize a little our script creating a main function, we are going to refactor some code and also we are going to eliminate unnecessary logs.
 
+## Refactor, create main function and delete unnecesary logs
+
 ```js
 #!/usr/bin/env node
+// index.js
 'use strict';
 
 const separator = '--';
@@ -259,6 +263,131 @@ User params:  {
   paramN: 'valueN' 
 }
 ```
+
+## Process the user arguments
+
+Now we are going to create the function where we will process the options of our CLI and for them we will define to put an example that our CLI will have the options of `create`, `search`, `edit`, `delete` and `process`.  Then having this we go to the code and create a function like the following: 
+
+```js
+const processAction = options => {
+  const action = options.action;
+  delete options.action;
+  switch (action) {
+    case 'create':
+      console.log('We to create anything with this params: ', options);
+    break;
+    case 'search':
+      console.log('We to search anything with this params: ', options);
+    break;
+    case 'edit':
+      console.log('We to edit anything with this params: ', options);
+    break;
+    case 'delete':
+      console.log('We to delete anything with this params: ', options);
+    break;
+    case 'process':
+      console.log('We to process anything with this params: ', options);
+    break;
+    default: 
+      console.log('You must send a valid action.');
+  }
+}
+```
+
+Then our new script will look like this:
+
+```js
+#!/usr/bin/env node
+// index.js
+'use strict';
+
+const separator = '--';
+
+const convertArrayArgumentsToObjectArguments = (argsV, separator) => {
+  const commandStr = argsV.join(' ');
+  const commandOptions = commandStr.split(separator);
+  const options = {
+    action: commandOptions[0].split(' ').filter(param => param !== '')[0],
+  };
+  commandOptions.shift();
+  for (let index = 0; index < commandOptions.length; index++) {
+    const params = commandOptions[index].split(' ');
+    const fixParams = params.filter(param => param !== '');
+    options[fixParams[0]] = fixParams.length > 2 ? fixParams.slice(1) : fixParams[1];
+  }
+  return options;
+}
+
+const processAction = options => {
+  const action = options.action;
+  delete options.action;
+  switch (action) {
+    case 'create':
+      console.log('We to create anything with this params: ', options);
+    break;
+    case 'search':
+      console.log('We to search anything with this params: ', options);
+    break;
+    case 'edit':
+      console.log('We to edit anything with this params: ', options);
+    break;
+    case 'delete':
+      console.log('We to delete anything with this params: ', options);
+    break;
+    case 'process':
+      console.log('We to process anything with this params: ', options);
+    break;
+    default:
+    console.log('You must send a valid action.');
+  }
+}
+
+const main = async () => {
+  const processArgv = process.argv;
+  if (!processArgv[2]) {
+    console.log('No entry');
+    process.exit(1);
+  }
+  const options = convertArrayArgumentsToObjectArguments(processArgv.splice(2), separator);
+  processAction(options);
+}
+
+main();
+```
+
+And then by executing one of our actions we will have: 
+
+```js
+$ nodewk create --param1 value1A value1B --param2 value2A value2B value2C --param3 value3 --paramN valueN
+We to create something with this params:  
+{ param1: [ 'value1A', 'value1B' ],
+  param2: [ 'value2A', 'value2B', 'value2C' ],
+  param3: 'value3',
+  paramN: 'valueN' 
+}
+```
+
+But in case of executing an option that is not contemplated within the ones allowed by our code we will also have an answer:
+
+```js
+$ nodewk ourAction --param1 value1A value1B --param2 value2A value2B value2C --param3 value3 --paramN valueN
+You must send a valid action.
+```
+
+# Chapter Four 🎬
+
+But wait, that code can be improved and a switch looks ugly in the code, so let's refactor that and as a result we'll have:
+
+## How to convert a switch statement to a nicer code
+
+It's not that a switch can't be used in software development, but there are better ways to replace the functionality provided by a switch, such as the following change:
+
+
+
+
+
+
+
 
 
 
