@@ -167,7 +167,6 @@ const processArgv = process.argv;
 
 const convertArrayArgumentsToObjectArguments = (argsV, separator) => {
   const commandStr = argsV.join(' ');
-  console.log('Command: ', commandStr);
   const commandOptions = commandStr.split(separator);
   const options = {
     action: commandOptions[0].split(' ').filter(param => param !== '')[0],
