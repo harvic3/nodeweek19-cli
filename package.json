@@ -1,0 +1,20 @@
+{
+  "name": "node-cli",
+  "version": "1.0.0",
+  "description": "the power of cli for node week in globant",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm install",
+    "start": "npm run index"
+  },
+  "keywords": [
+    "cli",
+    "node",
+    "nodeweek",
+    "command",
+    "prompt"
+  ],
+  "author": "Victor Higuita <vickodev@gmail.com>",
+  "license": "MIT"
+}
