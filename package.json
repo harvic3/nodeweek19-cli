@@ -16,5 +16,8 @@
     "prompt"
   ],
   "author": "Victor Higuita <vickodev@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "bin": {
+    "nodewk": "./index.js"
+  }
 }
