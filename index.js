@@ -26,28 +26,43 @@ const convertArrayArgumentsToObjectArguments = (argsV, separator) => {
   return options;
 }
 
+const createSomething = options => {
+  console.log('We to create something with this params: ', options);
+}
+
+const searchSomething = options => {
+  console.log('We to search something with this params: ', options);
+}
+
+const editSomething = options => {
+  console.log('We to edit something with this params: ', options);
+}
+
+const deleteSomething = options => {
+  console.log('We to create something with this params: ', options);
+}
+
+const processSomething = options => {
+  console.log('We to create something with this params: ', options);
+}
+
+const noEntry = () => {
+  console.log('You must send a valid action');
+};
+
 const processAction = options => {
   const action = options.action;
+  const actions = {
+    create: createSomething,
+    search: searchSomething,
+    edit: editSomething,
+    delete: deleteSomething,
+    process: processSomething,
+    default: noEntry
+  };
   delete options.action;
-  switch (action) {
-    case 'create':
-      console.log('We to create something with this params: ', options);
-    break;
-    case 'search':
-      console.log('We to search something with this params: ', options);
-    break;
-    case 'edit':
-      console.log('We to edit something with this params: ', options);
-    break;
-    case 'delete':
-      console.log('We to delete something with this params: ', options);
-    break;
-    case 'process':
-      console.log('We to process something  with this params: ', options);
-    break;
-    default: 
-      console.log('You must send a valid action.');
-  }
+  const result = actions[action] ? actions[action](options) : actions.default();
+  return result;
 }
 
 const main = async () => {
