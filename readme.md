@@ -382,6 +382,123 @@ But wait, that code can be improved and a switch looks ugly in the code, so let'
 
 It's not that a switch can't be used in software development, but there are better ways to replace the functionality provided by a switch, such as the following change:
 
+```js
+const processAction = options => {
+  const action = options.action;
+  const actions = {
+    create: createSomething,
+    search: searchSomething,
+    edit: editSomething,
+    delete: deleteSomething,
+    process: processSomething,
+    default: noEntry
+  };
+  delete options.action;
+  const result = actions[action] ? actions[action](options) : actions.default();
+  return result;
+}
+```
+
+Then finally our new script will look like this:
+
+```js
+#!/usr/bin/env node
+// index.js
+'use strict';
+
+const separator = '--';
+
+const convertArrayArgumentsToObjectArguments = (argsV, separator) => {
+  const commandStr = argsV.join(' ');
+  const commandOptions = commandStr.split(separator);
+  const options = {
+    action: commandOptions[0].split(' ').filter(param => param !== '')[0],
+  };
+  commandOptions.shift();
+  for (let index = 0; index < commandOptions.length; index++) {
+    const params = commandOptions[index].split(' ');
+    const fixParams = params.filter(param => param !== '');
+    options[fixParams[0]] = fixParams.length > 2 ? fixParams.slice(1) : fixParams[1];
+  }
+  return options;
+}
+
+const createSomething = options => {
+  console.log('We to create something with this params: ', options);
+}
+
+const searchSomething = options => {
+  console.log('We to search something with this params: ', options);
+}
+
+const editSomething = options => {
+  console.log('We to edit something with this params: ', options);
+}
+
+const deleteSomething = options => {
+  console.log('We to create something with this params: ', options);
+}
+
+const processSomething = options => {
+  console.log('We to create something with this params: ', options);
+}
+
+const noEntry = () => {
+  console.log('You must send a valid action');
+};
+
+const processAction = options => {
+  const action = options.action;
+  const actions = {
+    create: createSomething,
+    search: searchSomething,
+    edit: editSomething,
+    delete: deleteSomething,
+    process: processSomething,
+    default: noEntry
+  };
+  delete options.action;
+  const result = actions[action] ? actions[action](options) : actions.default();
+  return result;
+}
+
+const main = async () => {
+  const processArgv = process.argv;
+  if (!processArgv[2]) {
+    console.log('No entry');
+    process.exit(1);
+  }
+  const options = convertArrayArgumentsToObjectArguments(processArgv.splice(2), separator);
+  processAction(options);
+}
+
+main();
+```
+
+Well at this point we will already have a basis for our new CLI application and from now on depends on the needs of each, so to finish we will give the reference some npm packages that will help your CLI is quite interactive.
+
+## Tools to parse the options entered by the user
+
+If you remember, we take the task of handling the options entered by the user in the command line, there are npm packages that do this for us, but not always install a package for such a simple solution is the best option, so we should think about whether it is really necessary because this adds dependencies to our application and in the long run could affect us in some way, either by security issues or by the simple fact that a package has other dependencies.
+
+So here are some packages that will help you with the management of the options.
+
+- <a href="https://www.npmjs.com/package/minimist" target="_blank" >Minimist</a>
+- <a href="https://www.npmjs.com/package/yargs" target="_blank" >Yargs</a>
+- <a href="https://www.npmjs.com/package/commander" target="_blank" >Commander</a>
+- <a href="https://www.npmjs.com/package/args" target="_blank" >Args</a>
+
+## Tools to add steroids to your CLI
+
+The interactivity of your application is very important, so these tools will support you with the UX allowing your CLI to have multiple selection options, single selection, answer questions, process answers and much more.
+
+- <a href="https://www.npmjs.com/package/inquirer" target="_blank" >Inquirer</a>
+- <a href="https://www.npmjs.com/package/prompts" target="_blank" >Prompts</a>
+- <a href="https://www.npmjs.com/package/prompt" target="_blank" >Prompt</a>
+- <a href="https://www.npmjs.com/package/enquirer" target="_blank" >Enquirer</a>
+
+
+Well, it's been a pleasure, until next time. 👽
 
 
 
