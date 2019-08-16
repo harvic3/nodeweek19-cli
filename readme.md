@@ -1,6 +1,6 @@
 # The Power Of CLI (NodeJS)
 
-> Presentation for the NodeWeek conference at Globant Medellin CO in August 2019. 
+> Not everything has to be an API, there are more ways to take advantage of the code, how about a CLI?
 
 Before we begin we must choose a name for our CLI, and for this particular case I have chosen `"nodewk"`.
 
